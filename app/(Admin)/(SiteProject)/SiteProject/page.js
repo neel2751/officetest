@@ -1,7 +1,7 @@
-import React from "react";
-import SiteProject from "./siteProject";
-import NavBar from "@/components/navBar/navBar";
-import SideBar from "@/components/navBar/sideBar";
+import React from 'react';
+import SiteProject from './siteProject';
+import NavBar from '@/components/navBar/navBar';
+import SideBar from '@/components/navBar/sideBar';
 
 const page = () => {
   return (

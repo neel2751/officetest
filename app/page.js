@@ -1,5 +1,5 @@
-import DashBoard from "./(Admin)/(DashBoard)/DashBoard";
-import Main from "./(Main)/Main";
+import DashBoard from './(Admin)/(DashBoard)/DashBoard';
+import Main from './(Main)/Main';
 
 export default function Home() {
   return (

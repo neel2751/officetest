@@ -1,6 +1,6 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Search from "@/components/Search/search";
+'use client';
+import React, { useState, useEffect, useCallback } from 'react';
+import Search from '@/components/Search/search';
 import {
   TableAction,
   TableBody,
@@ -9,22 +9,22 @@ import {
   TableHead,
   TableHeading,
   TableTH,
-} from "@/components/Table";
-import { useDebounce } from "@/helper/debounceHelper";
-import NewFormModel from "@/components/ModelForm/FormModel";
+} from '@/components/Table';
+import { useDebounce } from '@/helper/debounceHelper';
+import NewFormModel from '@/components/ModelForm/FormModel';
 import {
   addRole,
   roleUpdateStatus,
   searchRoleByKeyword,
   updateRoleById,
-} from "@/actions/roleAction/roleAction";
-import { ROLEFIELD as fields } from "@/allFormField/field";
-import { getAllProjects } from "@/actions/siteProject/siteProjectAction";
-import { TableSiteStatus } from "@/components/Table/Table";
+} from '@/actions/roleAction/roleAction';
+import { ROLEFIELD as fields } from '@/allFormField/field';
+import { getAllProjects } from '@/actions/siteProject/siteProjectAction';
+import { TableSiteStatus } from '@/components/Table/Table';
 
 const RoleTable = ({ page }) => {
   const [isOpen, setIsOpen] = useState(false); // OPEN MODEL STATE
-  const [editId, setEditId] = useState(""); // EDIT ID FOR OPEN MODEL
+  const [editId, setEditId] = useState(''); // EDIT ID FOR OPEN MODEL
   const [search, setSearch] = useState(); // Main Search Pass into Debounce
   const searchDebounce = useDebounce(search, 500); // This is Debounce Search
   const [roles, setRoles] = useState([]); // ALL DATA IS HERE
@@ -43,7 +43,7 @@ const RoleTable = ({ page }) => {
 
   const currentData = roles.slice(
     (currentPage - 1) * pageSize,
-    currentPage === lastPage ? roles.length : currentPage * pageSize
+    currentPage === lastPage ? roles.length : currentPage * pageSize,
   );
   // Handle Add Site Project
   const handleSubmit = async (data) => {
@@ -58,14 +58,14 @@ const RoleTable = ({ page }) => {
       if (response.status === 201) {
         onHandleCloseModal();
       } else {
-        alert("Somthing  went wrong please try again later");
+        alert('Somthing  went wrong please try again later');
       }
     }
   };
   // Handle Active /Inactive Status
   const handleActiveStatus = async (id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to Chnage Role Status?"
+      'Are you sure you want to Chnage Role Status?',
     );
     if (confirmed) {
       const response = await roleUpdateStatus(id); // Call the onDelete function provided by the parent component
@@ -85,41 +85,41 @@ const RoleTable = ({ page }) => {
   // Handle Close Model
   const onHandleCloseModal = () => {
     setIsOpen(false);
-    setInitialValue("");
+    setInitialValue('');
     setResetFlag(!resetFlag);
-    setEditId("");
+    setEditId('');
   };
   // FETCH ALL DATA WITH USER SEARCH OR ALL DATA WITH  PAGINATION
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const searchPro = await searchRoleByKeyword(searchDebounce);
       if (searchPro.data) {
         setRoles(JSON.parse(searchPro.data));
       } else {
-        console.error("Invalid data structure:", searchPro);
+        console.error('Invalid data structure:', searchPro);
       }
     } catch (error) {
-      console.error("Error fetching or searching projects:", error);
+      console.error('Error fetching or searching projects:', error);
     }
-  };
+  }, [searchDebounce]);
   const getAllSite = async () => {
     try {
       const response = await getAllProjects();
       //change key name like siteName to lable
       if (!response)
-        return alert("You have to add first Site Project At least One");
+        return alert('You have to add first Site Project At least One');
       setSiteOptions(
         JSON.parse(response.data).map((item) => ({
           code: item._id,
           label: item.siteName,
-        }))
+        })),
       );
     } catch (error) {
-      console.log("Error fetching options", error);
+      console.log('Error fetching options', error);
     }
   };
   const updatedRoleField = fields.map((field) => {
-    if (field.name === "projectSiteID") {
+    if (field.name === 'projectSiteID') {
       return {
         ...field,
         options: siteOptions,
@@ -131,7 +131,7 @@ const RoleTable = ({ page }) => {
   useEffect(() => {
     getAllSite();
     fetchData(); // Call The Function
-  }, [isOpen, searchDebounce, resetFlag]);
+  }, [isOpen, resetFlag, fetchData]);
   //   const getRoles = async () => {
   //     try {
   //       let res = await fetch("/api/role?page=" + pageNumber, { method: "GET" });
@@ -153,8 +153,8 @@ const RoleTable = ({ page }) => {
       <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
         <div className="mb-1 w-full">
           <TableHeading
-            title={`All ${page.split("/")[1]}`}
-            slug={`All ${page.split("/")[1]}`}
+            title={`All ${page.split('/')[1]}`}
+            slug={`All ${page.split('/')[1]}`}
           />
           <div className="sm:flex">
             <div className="sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
@@ -177,9 +177,9 @@ const RoleTable = ({ page }) => {
                   </svg>
                 }
                 cls={
-                  "w-1/2 sm:w-auto text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200"
+                  'w-1/2 sm:w-auto text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200'
                 }
-                btnName={"Add Role"}
+                btnName={'Add Role'}
                 handleClick={() => setIsOpen(!isOpen)}
               />
               <TableAction
@@ -197,9 +197,9 @@ const RoleTable = ({ page }) => {
                     ></path>
                   </svg>
                 }
-                btnName={"Export"}
+                btnName={'Export'}
                 cls={
-                  "w-1/2 sm:w-auto text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200"
+                  'w-1/2 sm:w-auto text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200'
                 }
                 // handleClick={() => exportCSVFile(currentData)}
               />
@@ -262,7 +262,7 @@ const RoleTable = ({ page }) => {
                                 ></path>
                               </svg>
                             }
-                            btnName={`Edit ${page.split("/")[1]}`}
+                            btnName={`Edit ${page.split('/')[1]}`}
                             cls="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200"
                             handleClick={() => handleOpenModel(item)}
                           />
@@ -281,7 +281,7 @@ const RoleTable = ({ page }) => {
                                 ></path>
                               </svg>
                             }
-                            btnName={`Delete ${page.split("/")[1]}`}
+                            btnName={`Delete ${page.split('/')[1]}`}
                             cls="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300"
                             handleClick={() => handleOpenModel(item)}
                           />
@@ -289,6 +289,7 @@ const RoleTable = ({ page }) => {
                       </tr>
                     ))}
                 </TableBody>
+                <div onClick={onPageChange}></div>
               </table>
             </div>
           </div>
@@ -296,13 +297,13 @@ const RoleTable = ({ page }) => {
       </div>
       {/* Table End */}
       <NewFormModel
-        title={"Add New Role"}
+        title={'Add New Role'}
         fields={updatedRoleField}
         initialValues={initialValue}
         onSubmit={handleSubmit}
         isOpen={isOpen}
-        btnName={"Create New Role"}
-        editBtnName={"Update Role Information"}
+        btnName={'Create New Role'}
+        editBtnName={'Update Role Information'}
         id={editId}
         onHandleCloseModal={onHandleCloseModal}
         resetFlag={resetFlag}
