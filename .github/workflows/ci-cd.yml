@@ -2,12 +2,14 @@ name: CI/CD
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,16 +25,18 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        # Run the lint command
+
       - name: Run lint
         run: npm run lint
-        # Run another command for format check
+
       - name: Run format check
         run: npm run format
 
-      #   - name: Build Next.js app
-      #     run: npm run build
-      - name: Check commit changes
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
-        # with:
-        #   folder: build
+        with:
+          branch: gh-pages
+          folder: out
