@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState, createContext, useContext } from "react";
 
 const SidebarContext = createContext();
@@ -8,7 +9,9 @@ export default function SideBar({ children }) {
     <aside className={`${expanded ? "w-64" : "w-32"} h-screen`}>
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
-          <img
+          <Image
+            width={30}
+            height={30}
             src="https://img.logoipsum.com/243.svg"
             className={`overflow-hidden transition-all ${
               expanded ? "w-32" : "w-0"
@@ -42,9 +45,11 @@ export default function SideBar({ children }) {
         </SidebarContext.Provider>
 
         <div className="border-t flex p-3">
-          <img
+          <Image
+            width={8}
+            height={8}
             src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-            alt=""
+            alt="this is the test tag"
             className="w-10 h-10 rounded-md"
           />
           <div

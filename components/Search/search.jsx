@@ -3,7 +3,7 @@ import React, { useId, forwardRef } from "react";
 
 const Search = forwardRef(function Search(
   { placeholder, onChange, ...prop },
-  ref
+  ref,
 ) {
   const searchId = useId();
   return (

@@ -1,20 +1,20 @@
-'use client';
-import NewFormModel from '@/components/ModelForm/FormModel';
-import React, { useCallback, useEffect, useState } from 'react';
-import Search from '@/components/Search/search';
-import { SITEFIELD as fields } from '@/allFormField/field';
+"use client";
+import NewFormModel from "@/components/ModelForm/FormModel";
+import React, { useCallback, useEffect, useState } from "react";
+import Search from "@/components/Search/search";
+import { SITEFIELD as fields } from "@/allFormField/field";
 import {
   addSiteProject,
   searchSiteProjectByKeywordNew,
   siteUpdateStatus,
   updateSiteProjectById,
-} from '@/actions/siteProject/siteProjectAction';
-import { useDebounce } from '@/helper/debounceHelper';
+} from "@/actions/siteProject/siteProjectAction";
+import { useDebounce } from "@/helper/debounceHelper";
 // import PaginationHelper from '@/helper/paginationHelper';
 import {
   changeDateToString,
   exportCSVFile,
-} from '@/actions/commonAction/commonAction';
+} from "@/actions/commonAction/commonAction";
 import {
   TableHeading,
   TableHead,
@@ -24,11 +24,11 @@ import {
   TableDataStatus,
   TableAction,
   TableSiteStatus,
-} from '@/components/Table/Table';
+} from "@/components/Table/Table";
 
 const SiteProject = () => {
   const [isOpen, setIsOpen] = useState(false); // OPEN MODEL STATE
-  const [editId, setEditId] = useState(''); // EDIT ID FOR OPEN MODEL
+  const [editId, setEditId] = useState(""); // EDIT ID FOR OPEN MODEL
   const [search, setSearch] = useState(); // Main Search Pass into Debounce
   const searchDebounce = useDebounce(search, 500); // This is Debounce Search
   const [siteProjects, setSiteProjects] = useState([]); // ALL DATA IS HERE
@@ -62,14 +62,14 @@ const SiteProject = () => {
       if (response.status === 201) {
         onHandleCloseModal();
       } else {
-        alert('Somthing  went wrong please try again later');
+        alert("Somthing  went wrong please try again later");
       }
     }
   };
   // Handle Active /Inactive Status
   const handleActiveStatus = async (id) => {
     const confirmed = window.confirm(
-      'Are you sure you want to Chnage Status This Site?',
+      "Are you sure you want to Chnage Status This Site?",
     );
     if (confirmed) {
       const response = await siteUpdateStatus(id); // Call the onDelete function provided by the parent component
@@ -90,9 +90,9 @@ const SiteProject = () => {
   // Handle Close Model
   const onHandleCloseModal = () => {
     setIsOpen(false);
-    setInitialValue('');
+    setInitialValue("");
     handleResetButtonClick();
-    setEditId('');
+    setEditId("");
   };
   // FETCH ALL DATA WITH USER SEARCH OR ALL DATA WITH  PAGINATION
   const fetchData = useCallback(async () => {
@@ -101,10 +101,10 @@ const SiteProject = () => {
       if (searchPro.data) {
         setSiteProjects(JSON.parse(searchPro.data));
       } else {
-        console.error('Invalid data structure:', searchPro);
+        console.error("Invalid data structure:", searchPro);
       }
     } catch (error) {
-      console.error('Error fetching or searching projects:', error);
+      console.error("Error fetching or searching projects:", error);
     }
   }, [searchDebounce]);
   // Get all projects data
@@ -139,9 +139,9 @@ const SiteProject = () => {
                   </svg>
                 }
                 cls={
-                  'w-1/2 sm:w-auto text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200'
+                  "w-1/2 sm:w-auto text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200"
                 }
-                btnName={'Add Site'}
+                btnName={"Add Site"}
                 handleClick={() => setIsOpen(!isOpen)}
               />
               <TableAction
@@ -159,9 +159,9 @@ const SiteProject = () => {
                     ></path>
                   </svg>
                 }
-                btnName={'Export'}
+                btnName={"Export"}
                 cls={
-                  'w-1/2 sm:w-auto text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200'
+                  "w-1/2 sm:w-auto text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200"
                 }
                 handleClick={() => exportCSVFile(currentData)}
               />
@@ -194,7 +194,7 @@ const SiteProject = () => {
                         <TableSiteStatus title={item.status} />
                         <TableData title={item.siteType} />
                         <TableData title={changeDateToString(item.createdAt)} />
-                        <TableData title={item.siteAddress || 'Unavailable'} />
+                        <TableData title={item.siteAddress || "Unavailable"} />
                         <TableDataStatus
                           isActive={item.isActive}
                           handleClick={() => handleActiveStatus(item._id)}
@@ -252,13 +252,13 @@ const SiteProject = () => {
       {/* Table End */}
 
       <NewFormModel
-        title={'Add New Site'}
+        title={"Add New Site"}
         fields={fields}
         initialValues={initialValue}
         onSubmit={handleSubmit}
         isOpen={isOpen}
-        btnName={'Create New Site'}
-        editBtnName={'Update Site Information'}
+        btnName={"Create New Site"}
+        editBtnName={"Update Site Information"}
         id={editId}
         onHandleCloseModal={onHandleCloseModal}
         resetFlag={resetFlag}

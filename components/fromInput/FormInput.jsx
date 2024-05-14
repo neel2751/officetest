@@ -1,4 +1,4 @@
-import React, { useId, useState } from "react";
+import React, { useId } from "react";
 import Datepicker from "react-datepicker";
 import { useController } from "react-hook-form";
 
@@ -17,13 +17,13 @@ export const TextFormInput = React.forwardRef(function TextFormInput(
     helperText,
     ...prop
   },
-  ref
+  ref,
 ) {
   return (
     // <div className="relative">
 
     <div>
-      {labelText && <Label labelText={labelText} htmlFor={useId()} />}
+      {labelText && <Label labelText={labelText} htmlFor={useId} />}
       <div className="flex flex-col">
         <input
           {...prop}
@@ -53,7 +53,7 @@ export const TextFormInput = React.forwardRef(function TextFormInput(
 // # Select  Form Input Component without Search
 export const Select = React.forwardRef(function Select(
   { label, cls, options, errorMsg, ...props },
-  ref
+  ref,
 ) {
   const id = useId();
 
@@ -96,8 +96,8 @@ export const Select = React.forwardRef(function Select(
 
 // # Radio button components This is the black box generated...
 export const Radio = React.forwardRef(function Radio(
-  { onchange, ...rest },
-  ref
+  { onchange, useRadioGroup, ...rest },
+  ref,
 ) {
   const groupValue = useRadioGroup();
   const checked = rest.value === groupValue;
@@ -124,7 +124,7 @@ export const Radio = React.forwardRef(function Radio(
 // # We using the every where of this radio components
 export const RadioSection = React.forwardRef(function RadioSection(
   { name, value, checked, onChange, type },
-  ref
+  ref,
 ) {
   return (
     <label
@@ -161,7 +161,7 @@ export const Label = ({ labelText }) => {
 // # Create TextArea  Component for our form...
 export const Textarea = React.forwardRef(function TextArea(
   { rows = 6, labelText, helperText, errorMsg, ...props },
-  ref
+  ref,
 ) {
   return (
     <>
@@ -192,7 +192,7 @@ export const Textarea = React.forwardRef(function TextArea(
 // # Create Custom Date Desing ed Input Fields.. with using  `Input` component from Chakra UI library..
 const CustomDateDesign = React.forwardRef(function CustomDateDesign(
   { cls, labelText, value, placeholder, onchange },
-  ref
+  ref,
 ) {
   return (
     <>
@@ -228,7 +228,7 @@ const CustomDateDesign = React.forwardRef(function CustomDateDesign(
 
 export const DatePicker = React.forwardRef(function DatePicker(
   { name, control, labelText, cls, placeholder, errorMsg, ...rest },
-  ref
+  ref,
 ) {
   const {
     field: { value, onChange, onBlur, ref: inputRef },
@@ -239,7 +239,7 @@ export const DatePicker = React.forwardRef(function DatePicker(
   });
   const CustomDateInput = React.forwardRef(function CustomDateInput(
     { value, onClick, cls, labelText },
-    ref
+    ref,
   ) {
     return (
       <CustomDateDesign

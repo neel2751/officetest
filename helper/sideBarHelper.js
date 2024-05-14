@@ -5,7 +5,7 @@ const toggleSidebarMobile = (
   sidebar,
   sidebarBackdrop,
   toggleSidebarMobileHamburger,
-  toggleSidebarMobileClose
+  toggleSidebarMobileClose,
 ) => {
   sidebar.classList.toggle("hidden");
   sidebarBackdrop.classList.toggle("hidden");
@@ -16,10 +16,10 @@ const toggleSidebarMobile = (
 const toggleSidebarMobileEl = document.getElementById("toggleSidebarMobile");
 const sidebarBackdrop = document.getElementById("sidebarBackdrop");
 const toggleSidebarMobileHamburger = document.getElementById(
-  "toggleSidebarMobileHamburger"
+  "toggleSidebarMobileHamburger",
 );
 const toggleSidebarMobileClose = document.getElementById(
-  "toggleSidebarMobileClose"
+  "toggleSidebarMobileClose",
 );
 // const toggleSidebarMobileSearch = document.getElementById(
 //   "toggleSidebarMobileSearch"

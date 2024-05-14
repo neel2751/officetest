@@ -4,7 +4,7 @@ import { Label } from "../fromInput/FormInput";
 
 const SearchableSelect = forwardRef(function SearchableSelect(
   { selectLable, options, onSelect, cls, errorMsg, labelText },
-  ref
+  ref,
 ) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,7 +27,7 @@ const SearchableSelect = forwardRef(function SearchableSelect(
     setSearchTerm(term);
 
     const filtered = options.filter((option) =>
-      option.label.toLowerCase().includes(term)
+      option.label.toLowerCase().includes(term),
     );
 
     setFilteredOptions(filtered);
@@ -53,7 +53,7 @@ const SearchableSelect = forwardRef(function SearchableSelect(
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
 
   return (
     <div ref={selectRef} className=" text-gray-800 relative">
@@ -69,8 +69,8 @@ const SearchableSelect = forwardRef(function SearchableSelect(
             {selectedOption
               ? selectedOption.label
               : selectLable
-              ? `${selectLable}`
-              : "Type to search..."}
+                ? `${selectLable}`
+                : "Type to search..."}
           </div>
           <div className="absolute top-1/2 end-3 -translate-y-1/2">
             <svg

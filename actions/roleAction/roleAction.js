@@ -54,7 +54,7 @@ export const roleUpdateStatus = async (id) => {
       const updatedStatus = !role.isActive;
       role = await RoleModel.updateOne(
         { _id: id },
-        { $set: { isActive: updatedStatus } }
+        { $set: { isActive: updatedStatus } },
       );
       const data = {
         status: 201,

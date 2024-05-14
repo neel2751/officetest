@@ -34,7 +34,7 @@ const projectSiteSchema = new mongoose.Schema(
       default: Date.now(),
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 const ProjectSiteModel =
   mongoose.models.ProjectSite ||

@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Search from "../Search/search";
 import { TextFormInput } from "../fromInput/FormInput";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ import {
 import { useDebounce } from "@/helper/debounceHelper";
 import PaginationHelper from "@/helper/paginationHelper";
 import { changeDateToString } from "@/actions/commonAction/commonAction";
+import Image from "next/image";
 
 const Table = () => {
   const [isOpen, setIsOpen] = useState(false); // OPEN MODEL STATE
@@ -36,7 +37,7 @@ const Table = () => {
 
   const currentData = siteProjects.slice(
     (currentPage - 1) * pageSize,
-    currentPage === lastPage ? siteProjects.length : currentPage * pageSize
+    currentPage === lastPage ? siteProjects.length : currentPage * pageSize,
   );
 
   // HANDLE EXPORT CSV FILE
@@ -70,7 +71,7 @@ const Table = () => {
   // Handle Active /Inactive Status
   const handleActiveStatus = async (id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to Chnage Status This Site?"
+      "Are you sure you want to Chnage Status This Site?",
     );
     if (confirmed) {
       const response = await siteUpdateStatus(id); // Call the onDelete function provided by the parent component
@@ -93,7 +94,7 @@ const Table = () => {
   };
 
   // FETCH ALL DATA WITH USER SEARCH OR ALL DATA WITH  PAGINATION
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       // setLoading(true);
       // startTransition (() => {setLoading(true)})
@@ -108,7 +109,7 @@ const Table = () => {
       console.error("Error fetching or searching projects:", error);
       // Handle the error and potentially set an error state
     }
-  };
+  }, [searchDebounce]);
 
   //   useEffect(() => {
   //     let pageNumber = queryParams.get("page") || 1;
@@ -123,7 +124,7 @@ const Table = () => {
   // Get all projects data
   useEffect(() => {
     fetchData(); // Call The Function
-  }, [isOpen, searchDebounce]);
+  }, [isOpen, searchDebounce, fetchData]);
 
   return (
     <>
@@ -918,10 +919,12 @@ export function UsersTable({ data }) {
               </div>
             </td>
             <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
-              <img
+              <Image
                 className="h-10 w-10 rounded-full"
                 src="/images/users/{{ .avatar }}"
                 alt="{{ .name }} avatar"
+                height={100}
+                width={100}
               />
               <div className="text-sm font-normal text-gray-500">
                 <div className="text-base font-semibold text-gray-900">

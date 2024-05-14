@@ -1,8 +1,8 @@
-'use client';
-import NavBar from '@/components/navBar/navBar';
-import SideBar from '@/components/navBar/sideBar';
-import React from 'react';
-import { usePathname } from 'next/navigation';
+"use client";
+import NavBar from "@/components/navBar/navBar";
+import SideBar from "@/components/navBar/sideBar";
+import React from "react";
+import { usePathname } from "next/navigation";
 
 const Main = ({ children }) => {
   const router = usePathname();

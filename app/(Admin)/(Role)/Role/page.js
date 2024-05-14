@@ -1,7 +1,7 @@
-import React from 'react';
-import Main from '@/app/(Main)/Main';
+import React from "react";
+import Main from "@/app/(Main)/Main";
 
-import RoleTable from './RoleTable';
+import RoleTable from "./RoleTable";
 
 const page = () => {
   return (

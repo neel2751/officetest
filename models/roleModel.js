@@ -40,7 +40,7 @@ const roleSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 const RoleModel = mongoose.models.Role || mongoose.model("Role", roleSchema);
 

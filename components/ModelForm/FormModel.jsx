@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Select, TextFormInput, Textarea } from "../fromInput/FormInput";
 import UseFormFields from "./useFormField";
 import SearchableSelect from "../SearchSelect/Select";
@@ -88,15 +88,18 @@ export const ReactHookForm = ({
 }) => {
   const { handleSubmit, fieldProps, errors, reset, setValue } = UseFormFields(
     fields,
-    initialValues
+    initialValues,
   );
+
+  // Memoize setResetFlag to ensure it's stable
+  const stableSetResetFlag = useCallback(setResetFlag, [setResetFlag]);
 
   useEffect(() => {
     if (resetFlag) {
       reset();
+      stableSetResetFlag(false);
     }
-    setResetFlag(false);
-  }, [resetFlag]);
+  }, [resetFlag, reset, stableSetResetFlag]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

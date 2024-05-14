@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const NavBar = () => {
@@ -43,7 +44,9 @@ const NavBar = () => {
               href=""
               className="text-xl font-bold flex items-center lg:ml-2.5"
             >
-              <img
+              <Image
+                height={20}
+                width={20}
                 src="/images/Logo.svg"
                 className="h-6 mr-2"
                 alt="Windster Logo"

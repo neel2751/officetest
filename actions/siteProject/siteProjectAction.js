@@ -61,7 +61,7 @@ export const siteUpdateStatus = async (id) => {
       const updatedStatus = !siteProject.isActive;
       siteProject = await ProjectSiteModel.updateOne(
         { _id: id },
-        { $set: { isActive: updatedStatus } }
+        { $set: { isActive: updatedStatus } },
       );
       const data = {
         status: 201,
@@ -87,7 +87,7 @@ export const updateSiteProjectById = async (id, data) => {
     if (!project) throw new Error(`Invalid Id`);
     await ProjectSiteModel.updateOne(
       { _id: id },
-      { siteName, siteAddress, status, siteType, siteDescription }
+      { siteName, siteAddress, status, siteType, siteDescription },
     );
     const data = {
       status: 200,
