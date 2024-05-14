@@ -1,0 +1,35 @@
+// {
+//   "extends": ["eslint:recommended", "next", "next/core-web-vitals", "prettier"],
+//   "plugins": ["prettier"],
+//   "rules": {
+//     "prettier/prettier": "error",
+//     "react/no-unescaped-entities": "off",
+//     "@next/next/no-page-custom-font": "off",
+//     "no-console": "off",
+//     "no-unused-vars": "off"
+//   }
+// }
+
+{
+  "extends": ["eslint:recommended", "next", "next/core-web-vitals", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false,
+        "semi": true,
+        "printWidth": 80,
+        "tabWidth": 2,
+        "useTabs": false,
+        "trailingComma": "all",
+        "bracketSpacing": true,
+        "arrowParens": "always"
+      }
+    ],
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "no-console": "off",
+    "no-unused-vars": "off"
+  }
+}
