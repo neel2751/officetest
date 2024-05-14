@@ -32,9 +32,6 @@ jobs:
       - name: Run format check
         run: npm run format
 
-      # - name: Build Next.js app
-      #   run: npm run build
-
       - name: Upload to GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
