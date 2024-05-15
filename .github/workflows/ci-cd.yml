@@ -61,7 +61,7 @@ jobs:
         run: npm run build
 
       - name: Zip build output
-        run: zip -r build.zip .next app static public package.json Procfile
+        run: zip -r app.zip .next package.json
 
       - name: Configure AWS credentials
         run: |
@@ -70,7 +70,7 @@ jobs:
           aws configure set default.region us-east-1  # Replace with your desired AWS region
 
       - name: Upload to S3
-        run: aws s3 cp build.zip s3://elasticbeanstalk-us-east-1-058264255233/build.zip
+        run: aws s3 cp build.zip s3://elasticbeanstalk-us-east-1-058264255233/app.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -85,7 +85,7 @@ jobs:
           aws elasticbeanstalk create-application-version \
             --application-name officetest \
             --version-label ${{ steps.create_version_label.outputs.version }} \
-            --source-bundle S3Bucket=elasticbeanstalk-us-east-1-058264255233,S3Key=build.zip
+            --source-bundle S3Bucket=elasticbeanstalk-us-east-1-058264255233,S3Key=app.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
