@@ -85,7 +85,7 @@ jobs:
           aws elasticbeanstalk create-application-version \
             --application-name officetest \
             --version-label ${{ steps.create_version_label.outputs.version }} \
-            --source-bundle S3Bucket=elasticbeanstalk-us-east-1-058264255233,S3Key=app.zip
+            --source-bundle S3Bucket=elasticbeanstalk-us-east-1-058264255233,S3Key=build.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
