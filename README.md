@@ -34,3 +34,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+If you don't have permissions to do the following changes, contact your AWS Administrator:
+
+1. Go to the IAM Management Console
+2. Navigate to Users > Your IAM User > Permissions > Add inline policy
+3. Add the following inline policy to grant the `s3:DeleteBucket` permission on the specific bucket:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:DeleteBucket",
+      "Resource": "arn:aws:s3:::elasticbeanstalk-us-east-1-058264255233"
+    }
+  ]
+}
+```
+
+4. After adding the policy, try deleting the S3 bucket again from the S3 console
