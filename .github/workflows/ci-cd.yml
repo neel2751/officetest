@@ -61,7 +61,7 @@ jobs:
         run: npm run build
 
       - name: Zip build output
-        run: zip -r build.zip .next static public package.json Procfile
+        run: zip -r build.zip .next static public styles *.json *.js
 
       - name: Configure AWS credentials
         run: |
