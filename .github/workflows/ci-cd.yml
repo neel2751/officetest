@@ -61,7 +61,7 @@ jobs:
         run: npm run build
 
       - name: Zip build output
-        run: zip -r build.zip .next static public styles *.json *.js
+        run: zip -r build.zip .next app static public package.json Procfile
 
       - name: Configure AWS credentials
         run: |
@@ -77,7 +77,8 @@ jobs:
 
       - name: Create version label
         id: create_version_label
-        run: echo "::set-output name=version::$(date +%s)"
+        # run: echo "::set-output name=version::$(date +%s)"
+        run: echo "version=$(date +%s)" >> $GITHUB_OUTPUT
 
       - name: Create Elastic Beanstalk application version
         run: |
