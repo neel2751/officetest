@@ -56,12 +56,13 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        # Using `npm ci` for faster and consistent dependency installation
 
       - name: Build Next.js app for AWS
         run: npm run build
 
       - name: Zip build output
-        run: zip -r build.zip .next public package.json
+        run: zip -r build.zip .next public package.json Procfile
 
       - name: Configure AWS credentials
         run: |
