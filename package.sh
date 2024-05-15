@@ -8,4 +8,4 @@ set -e
 
 npm run build
 
-zip -r app.zip .next package.json
+zip -r build.zip .next public package.json
