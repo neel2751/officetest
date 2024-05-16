@@ -46,8 +46,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -55,47 +53,25 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         # Using `npm ci` for faster and consistent dependency installation
 
       - name: Build Next.js app for AWS
         run: npm run build
 
-      - name: Zip build
-        run: zip -r build.zip .next *.json *.js Procfile
-
       - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region us-east-1
-
-      - name: Upload to S3
-        run: aws s3 cp build.zip s3://elasticbeanstalk-us-east-1-058264255233/build.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 
-      - name: Create version label
-        id: create_version_label
-        run: echo "::set-output name=version::$(date +%s)"
-        # run: echo "version=$(date +%s)" >> $GITHUB_OUTPUT
+      - name: Create deployment archive
+        run: zip -r build.zip .next/ public/ *.json *.js
 
-      - name: Create Elastic Beanstalk application version
-        run: |
-          aws elasticbeanstalk create-application-version \
-            --application-name officetest \
-            --version-label ${{ steps.create_version_label.outputs.version }} \
-            --source-bundle S3Bucket=elasticbeanstalk-us-east-1-058264255233,S3Key=build.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Update Elastic Beanstalk environment
-        run: |
-          aws elasticbeanstalk update-environment \
-            --environment-name Officetest-env \
-            --version-label ${{ steps.create_version_label.outputs.version }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload deployment archive to Elastic Beanstalk
+        uses: aws-actions/aws-eb-deploy@v1.9.2
+        with:
+          applicationName: officetest # Replace with your EB application name
+          environmentName: Officetest-env # Replace with your EB environment name
+          region: us-east-1 # Replace with your AWS region
+          zipFile: "build.zip"
