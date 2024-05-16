@@ -61,7 +61,7 @@ jobs:
       - name: Build Next.js app for AWS
         run: npm run build
 
-      - name: Zip build output
+      - name: Zip build
         run: zip -r build.zip .next *.json *.js Procfile
 
       - name: Configure AWS credentials
