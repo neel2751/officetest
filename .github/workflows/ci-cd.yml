@@ -57,7 +57,7 @@ jobs:
         # Using `npm ci` for faster and consistent dependency installation
 
       - name: Create deployment archive
-        run: zip -r build.zip .next/ public/ *.json *.js
+        run: zip -r build.zip .next/ public/ *.json *.js Procfile
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
