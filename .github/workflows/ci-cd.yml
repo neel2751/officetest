@@ -56,22 +56,16 @@ jobs:
         run: npm install
         # Using `npm ci` for faster and consistent dependency installation
 
-      - name: Build Next.js app for AWS
-        run: npm run build
-
-      - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-
       - name: Create deployment archive
         run: zip -r build.zip .next/ public/ *.json *.js
 
-      - name: Upload deployment archive to Elastic Beanstalk
-        uses: aws-actions/aws-eb-deploy@v1.9.2
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
         with:
-          applicationName: officetest # Replace with your EB application name
-          environmentName: Officetest-env # Replace with your EB environment name
-          region: us-east-1 # Replace with your AWS region
-          zipFile: "build.zip"
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: "officetest"
+          environment_name: "Officetest-env"
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          deployment_package: build.zip
