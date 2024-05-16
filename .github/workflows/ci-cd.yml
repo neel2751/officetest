@@ -78,8 +78,8 @@ jobs:
 
       - name: Create version label
         id: create_version_label
-        run: echo "::set-output name=version::$(date +%s)"
-        # run: echo "version=$(date +%s)" >> $GITHUB_OUTPUT
+        # run: echo "::set-output name=version::$(date +%s)"
+        run: echo "version=$(echo date +%s)" >> $GITHUB_OUTPUT
 
       - name: Create Elastic Beanstalk application version
         run: |
